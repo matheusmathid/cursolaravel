@@ -13,7 +13,7 @@ class CategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,31 @@ class CategoryRequest extends FormRequest
      */
     public function rules()
     {
+    	
+    	$category = $this->route('category');
+    	$id = $category ? $category->id : null;
         return [
-            'name'	=>	'required'
+            'name'	=>	"required|unique:categories,name,$id|max:255"
         ];
+    }
+    
+    public function messages()
+    {
+    	/*return [
+    		'name.required' => 	'O nome é obrigatório',
+    		'name.unique'	=>	'O nome deve ser único'
+    	];*/
+    	
+    	return [
+    			'required' => 	'O :attribute é obrigatório',
+    			'unique'	=>	'O :attribute deve ser único'
+    	];
+    }
+    
+    public function attributes ()
+    {
+    	return [
+    		'name'	=>	'nome'	
+    	];
     }
 }

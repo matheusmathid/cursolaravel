@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model
 {
     protected $fillable = [
-		'title','subtitle','price'
+		'title','subtitle','price','user_id'
 	];
     
-    public function getPriceAttribute($value)
+    public function user()
     {
-    	return  "R$ ".number_format($value,2,",",".");
+    	return $this->belongsTo(User::class);
     }
 }
