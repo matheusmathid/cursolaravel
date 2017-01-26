@@ -15,7 +15,7 @@ class BooksController extends Controller
      */
     public function index()
     {
-        $books = Book::query()->paginate(10);
+        $books = Book::query()->where('user_id','=',\Auth::user()->id)->paginate(10);
         return view('books.index',compact('books'));
     }
 
@@ -40,7 +40,9 @@ class BooksController extends Controller
     	$data = $request->all();
     	$data['user_id'] = \Auth::user()->id;
         Book::create($data);
-        return redirect()->route('books.index');
+        $url = $request->get('redirect_to',route('books.index'));
+        $request->session()->flash('message','Livro cadastrado com sucesso.');
+        return redirect()->to($url);
     }
 
     /**
@@ -65,7 +67,9 @@ class BooksController extends Controller
     {
         $book->fill($request->all());
     	$book->save();
-    	return redirect()->route('books.index');
+    	$url = $request->get('redirect_to',route('books.index'));
+    	$request->session()->flash('message','Livro atualizado com sucesso.');
+    	return redirect()->to($url);
     }
 
     /**

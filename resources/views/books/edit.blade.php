@@ -8,24 +8,10 @@
     		'route' => ['books.update','book' => $book->id],'class' => 'form','method' => 'PUT'
     	]) !!}
     	
-    	<div class='form-group'>
-    		{!! Form::label('title','Título') !!}
-    		{!! Form::text('title',null,['class' => 'form-control']) !!}
-    	</div>
-    	
-    	<div class='form-group'>
-    		{!! Form::label('subtitle','Subtítulo') !!}
-    		{!! Form::text('subtitle',null,['class' => 'form-control']) !!}
-    	</div>
-    	
-    	<div class='form-group'>
-    		{!! Form::label('price','Valor') !!}
-    		{!! Form::text('price',null,['class' => 'form-control']) !!}
-    	</div>
-    	
-    	<div class='form-group'>
-    		{!! Form::submit('Editar livro',['class' => 'btn btn-primary']) !!}
-    	</div>
+    	@include('books._form')
+    	{!! Html::openFormGroup() !!}
+    		{!! Button::primary('Enviar')->submit() !!}
+    	{!! Html::closeFormGroup() !!}
     	{!! Form::close()!!}
     </div>
 </div>
