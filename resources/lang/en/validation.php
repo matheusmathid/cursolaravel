@@ -112,6 +112,10 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+    	'name'	=>	'nome',
+    	'categories'	=>	'categorias',
+    	'categories_*'	=>	'categoria :num'	
+    ],
 
 ];

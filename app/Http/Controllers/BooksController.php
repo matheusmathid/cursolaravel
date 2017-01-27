@@ -41,7 +41,7 @@ class BooksController extends Controller
      */
     public function create()
     {
-    	$categories = $this->categoryRepository->all();
+    	$categories = $this->categoryRepository->lists('name','id'); // pluck -> trait
         return view('books.create',compact('categories'));
     }
 
@@ -53,6 +53,7 @@ class BooksController extends Controller
      */
     public function store(BookRequest $request)
     {
+    	
     	$data = $request->all();
     	$data['user_id'] = \Auth::user()->id;
         Book::create($data);

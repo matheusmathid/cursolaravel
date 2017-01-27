@@ -3,6 +3,7 @@
 namespace CodePub\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Lang;
 
 class BookRequest extends FormRequest
 {
@@ -23,34 +24,63 @@ class BookRequest extends FormRequest
      */
     public function rules()
     {
-        
+    	
         return [
-            'title'		=>	"required|unique:books,title|max:255",
-        	'subtitle'	=>	"required|max:255",
-        	'price'		=>	"required|numeric"
+            'title'			=>	"required|unique:books,title|max:255",
+        	'subtitle'		=>	"required|max:255",
+        	'price'			=>	"required|numeric",
+        	'categories'	=> 	'required|array',
+        	'categories.*'	=>	'exists:categories,id'
         ];
     }
     
     public function messages()
     {
+    	
+    	$result = [];
+    	$categories = $this->get('categories',[]);
+    	
+    	$count = count($categories);
+    	if(is_array($categories) && count($categories) > 0){
+    		
+    		
+    		foreach (range(0,$count -1 ) as $value){
+    			
+    			$field = \Lang::get('validation.attributes.categories_*',[
+    				'num'	=>	$value + 1,
+    			]);
+    			
+    			/*$message = \Lang::get('validation.exists',[
+    				'attribute'	=>	$field
+    			]);*/
+    			
+    			$result["categories.$value.exists"] = "{$field} inválida"; 
+    			
+    		}
+    	}
+    	$result['required'] = 'O :attribute é obrigatório';
+    	$result['unique'] = 'O :attribute deve ser unico(a)';
+    	
+    	return $result;
+    	
     	/*return [
     	 'name.required' => 	'O nome é obrigatório',
     	 'name.unique'	=>	'O nome deve ser único'
     	 ];*/
     	 
-    	return [
-    			'required' 	=> 	'O :attribute é obrigatório',
-    			'unique'	=>	'O :attribute deve ser único',
-    			'max'		=>	'O :attribute deve conter no máximo 255 caractéres'
-    	];
+    	
     }
     
-    public function attributes ()
+    
+   public function attributes ()
     {
     	return [
-    			'title'		=>	'Título',
-    			'subtitle'	=>	'Subtítulo',
-    			'price'		=>	'Valor'
+    			'title'			=>	'título',
+    			'subtitle'		=>	'subtítulo',
+    			'price'			=>	'valor',
+    			'categories'	=>	'categoria',
+    			'categories_*'	=>	'categoria :num'
+    			
     	];
     }
 }

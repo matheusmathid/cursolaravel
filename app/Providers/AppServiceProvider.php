@@ -14,13 +14,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         \Form::macro('error', function($field,$errors){
-        	if($errors->has($field)){
+        	#dd($errors);
+        	if(!str_contains($field, '.*') && $errors->has($field) || count($errors->get($field)) > 0){
         		return view('errors.error_field',compact('field'));
         	}
         	return null;
         });
         
         \Html::macro('openFormGroup', function($field = null,$errors = null){
+        	
         	$hasError = ($field != null and $errors != null and $errors->has($field)) ? 'has-error' : '';
         	return "<div class=\"form-group {$hasError}\">";
         });
