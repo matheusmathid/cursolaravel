@@ -1,5 +1,6 @@
 <?php
 
+use Prettus\Repository\Providers\RepositoryServiceProvider;
 return [
 
     /*
@@ -169,16 +170,18 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
     	Collective\Html\HtmlServiceProvider::class,
     	Bootstrapper\BootstrapperL5ServiceProvider::class,
+    	Prettus\Repository\Providers\RepositoryServiceProvider::class,
         //
 
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        CodePub\Providers\AppServiceProvider::class,
+        CodePub\Providers\AuthServiceProvider::class,
+        // CodePub\Providers\BroadcastServiceProvider::class,
+        CodePub\Providers\EventServiceProvider::class,
+        CodePub\Providers\RouteServiceProvider::class,
+    	\CodePub\Providers\RepositoryServiceProvider::class
 
     ],
 

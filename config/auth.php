@@ -1,5 +1,6 @@
 <?php
 
+use CodePub;
 return [
 
     /*
@@ -67,7 +68,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => CodePub\Models\User::class,
         ],
 
         // 'users' => [

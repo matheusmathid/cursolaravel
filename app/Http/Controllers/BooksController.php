@@ -1,22 +1,37 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace CodePub\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Book;
-use App\Http\Requests\BookRequest;
+use CodePub\Models\Book;
+use CodePub\Http\Requests\BookRequest;
+use CodePub\Http\Requests\BookUpdateRequest;
+use CodePub\Repositories\BookRepository;
+use CodePub\Criteria\FindByTitle;
+use CodePub\Criteria\FindByAuthorCriteria;
+use CodePub\Criteria\FindByTitleCriteria;
+use CodePub\Repositories\CategoryRepository;
 
 class BooksController extends Controller
 {
+	private $repository;
+	private $categoryRepository;
+	
+	public function __construct(BookRepository $repository, CategoryRepository $categoryRepository){
+		$this->repository = $repository;
+		$this->categoryRepository = $categoryRepository;
+	}
+	
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $books = Book::query()->where('user_id','=',\Auth::user()->id)->paginate(10);
-        return view('books.index',compact('books'));
+    	$search= $request->get('search');
+        $books = $this->repository->paginate(10);
+        return view('books.index',compact('books','search'));
     }
 
     /**
@@ -26,7 +41,8 @@ class BooksController extends Controller
      */
     public function create()
     {
-        return view('books.create');
+    	$categories = $this->categoryRepository->all();
+        return view('books.create',compact('categories'));
     }
 
     /**
@@ -63,7 +79,7 @@ class BooksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(BookRequest $request, Book $book)
+    public function update(BookUpdateRequest $request, Book $book)
     {
         $book->fill($request->all());
     	$book->save();

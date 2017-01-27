@@ -15,4 +15,10 @@
 	{!! Form::label('price','Valor',['class' => 'control-label']) !!}
 	{!! Form::text('price',null,['class' => 'form-control']) !!}
 	{!! Form::error('price',$errors) !!}
+{!! Html::closeFormGroup() !!}   
+ 	
+{!! Html::openFormGroup('categories',$errors) !!}
+	{!! Form::label('price','Valor',['class' => 'control-label']) !!}
+	{!! Form::select('categories[]',$categories,null,['class' => 'form-control','multiple' => true]) !!}
+	{!! Form::error('price',$errors) !!}
 {!! Html::closeFormGroup() !!}

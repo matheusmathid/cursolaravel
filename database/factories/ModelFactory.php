@@ -11,7 +11,7 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(CodePub\Models\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
@@ -23,16 +23,19 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 
-$factory->define(App\Category::class, function (Faker\Generator $faker) {
+$factory->define(CodePub\Models\Category::class, function (Faker\Generator $faker) {
 	return [
 			'name' => ucfirst($faker->unique()->word)
 	];
 });
 
-$factory->define(App\Book::class, function (Faker\Generator $faker) {
+$factory->define(CodePub\Models\Book::class, function (Faker\Generator $faker) {
+	$repository = app(\CodePub\Repositories\UserRepository::class);
+	$userId = $repository->all()->random()->id;
 	return [
 		'title' => ucfirst($faker->unique()->word),
 		'subtitle' => $faker->unique()->word,
-		'price'	=> $faker->randomFloat(2,10.00,60.00)
+		'price'	=> $faker->randomFloat(2,10.00,60.00),
+		'user_id'	=>	$userId
 	];
 });

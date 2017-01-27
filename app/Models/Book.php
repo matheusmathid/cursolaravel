@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace CodePub\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Bootstrapper\Interfaces\TableInterface;
@@ -16,9 +16,13 @@ class Book extends Model implements TableInterface
     	return $this->belongsTo(User::class);
     }
     
+    public function categories(){
+    	return $this->belongsToMany(Category::class);
+    }
+    
     public function getTableHeaders()
     {
-    	return ['#','Titulo','Subtitulo','Valor'];
+    	return ['#','Titulo','Subtitulo','Valor','Autor'];
     }
     
     public function getValueForHeader($header){
@@ -31,6 +35,10 @@ class Book extends Model implements TableInterface
     			return $this->subtitle;
     		case 'Valor':
     			return $this->price;
+    		case 'Autor':
+    				return $this->user->name;
     	}
     }
+    
+    
 }

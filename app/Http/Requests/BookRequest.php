@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace CodePub\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,11 +13,6 @@ class BookRequest extends FormRequest
      */
     public function authorize()
     {
-        $book = $this->route('book');
-        
-        if($book)
-       		return ($book->user_id == \Auth::user()->id) ? true : false; 
-        
        	return true;
     }
 
@@ -28,12 +23,11 @@ class BookRequest extends FormRequest
      */
     public function rules()
     {
-        $book = $this->route('book');
-    	$id = $book ? $book->id : null;
+        
         return [
-            'title'		=>	"required|unique:books,title,$id|max:255",
+            'title'		=>	"required|unique:books,title|max:255",
         	'subtitle'	=>	"required|max:255",
-        	'price'		=>	"required"
+        	'price'		=>	"required|numeric"
         ];
     }
     
