@@ -56,7 +56,7 @@ class BooksController extends Controller
     	
     	$data = $request->all();
     	$data['user_id'] = \Auth::user()->id;
-        Book::create($data);
+    	$this->repository->create($data);
         $url = $request->get('redirect_to',route('books.index'));
         $request->session()->flash('message','Livro cadastrado com sucesso.');
         return redirect()->to($url);
@@ -80,10 +80,9 @@ class BooksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(BookUpdateRequest $request, Book $book)
+    public function update(BookUpdateRequest $request, $id)
     {
-        $book->fill($request->all());
-    	$book->save();
+        $this->repository->update($request->all(), $id);
     	$url = $request->get('redirect_to',route('books.index'));
     	$request->session()->flash('message','Livro atualizado com sucesso.');
     	return redirect()->to($url);
@@ -95,9 +94,10 @@ class BooksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Book $book)
+    public function destroy($id)
     {
-        $book->delete();
+        $this->repository->delete($id);
+		\Session::flash('message','Livro removido com sucesso.');
 		return redirect()->route('books.index');
     }
 }
