@@ -3,7 +3,7 @@
 namespace CodePub\Http\Controllers;
 
 use Illuminate\Http\Request;
-use CodePub\Models\User;
+use CodeEduUser\Models\User;
 
 class HomeController extends Controller
 {

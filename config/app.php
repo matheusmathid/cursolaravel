@@ -1,6 +1,8 @@
 <?php
 
 use Prettus\Repository\Providers\RepositoryServiceProvider;
+use Nwidart\Modules\LaravelModulesServiceProvider;
+use CodeEduBook;
 return [
 
     /*
@@ -171,8 +173,14 @@ return [
     	Collective\Html\HtmlServiceProvider::class,
     	Bootstrapper\BootstrapperL5ServiceProvider::class,
     	Prettus\Repository\Providers\RepositoryServiceProvider::class,
+    	\Nwidart\Modules\LaravelModulesServiceProvider::class,
         //
 
+    		
+    	\CodeEduBook\Providers\CodeEduBookServiceProvider::class,
+        \CodeEduUser\Providers\CodeEduUserServiceProvider::class,
+    		
+    		
         /*
          * Application Service Providers...
          */
@@ -254,7 +262,8 @@ return [
    		'ProgressBar' => Bootstrapper\Facades\ProgressBar::class,
    		'Tabbable' => Bootstrapper\Facades\Tabbable::class,
    		'Table' => Bootstrapper\Facades\Table::class,
-   		'Thumbnail' => Bootstrapper\Facades\Thumbnail::class,
+   		'Thumbnail' =>  Bootstrapper\Facades\Thumbnail::class,
+    	'Module'	=>	\Nwidart\Modules\Facades\Module::class
     ],
 
 ];

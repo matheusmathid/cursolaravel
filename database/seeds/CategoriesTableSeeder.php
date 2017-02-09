@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use CodeEduBook\Models\Category;
 
 class CategoriesTableSeeder extends Seeder
 {
@@ -11,6 +12,6 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\CodePub\Models\Category::class,50)->create(); 
+        factory(CodeEduBook\Models\Category::class,50)->create();
     }
 }
